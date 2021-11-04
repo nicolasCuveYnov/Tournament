@@ -2,7 +2,7 @@
   "name": "sportogether-api",
   "version": "1.0.0",
   "description": "The Sportogether api",
-  "main": "index.js",
+  "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "lint": "eslint **/*.js"
@@ -18,7 +18,9 @@
   },
   "homepage": "https://github.com/Michel-Maxime/Sportogether-api#readme",
   "dependencies": {
-    "express": "^4.17.1"
+    "express": "^4.17.1",
+    "mongoose": "^6.0.12",
+    "nodemon": "^2.0.14"
   },
   "devDependencies": {
     "eslint": "^8.1.0"
