@@ -6,7 +6,7 @@ const port = 8080
 
 // Middlewares
 app.use(express.json())
-
+app.use(router)
 // MongoDB
 mongoose.connect('mongodb+srv://toto:123456789toto@sportogether.jeriw.mongodb.net/sportogether?retryWrites=true&w=majority',{
   useNewUrlParser : true,

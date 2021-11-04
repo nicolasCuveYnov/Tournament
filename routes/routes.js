@@ -8,7 +8,8 @@ app.post("/add_user", async (request, response) => {
       await user.save();
       response.send(user);
     } catch (error) {
-      response.status(500).send(error);
+        console.log("error POST")
+        response.status(500).send(error);
     }
 });
 
