@@ -1,3 +1,4 @@
+/* eslint-disable */
 const express = require('express')
 const mongoose = require('mongoose')
 const router = require('./routes/routes')
@@ -45,11 +46,13 @@ db.once("open", function () {
   console.log("Connexion à Mongo OK");
 })
 
-
-app.get('/error', (req, res) => {
-  throw new Error('Oups, there is an error on my express serv')
+app.get('/', (req, res) => {
+  res.send('Hello World!')
 })
 
+app.get('/error', (req, res) => {
+  throw new Error('Oups, there is an error on my express merge version')
+})
 
 app.get('/Sentry', (req, res) => {
   throw new Error('Sentry is working V2')
@@ -66,10 +69,6 @@ app.use(function onError(err, req, res, next) {
   res.statusCode = 500;
   res.end(res.sentry + "\n");
 });
-
-app.get('/', (req, res) => {
-  res.send('Hello World!')
-})
 
 app.listen(port, () => {
   console.log(`Run at http://localhost:${port}`)
