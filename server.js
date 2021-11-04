@@ -1,8 +1,35 @@
 const express = require('express')
 const mongoose = require('mongoose')
 const router = require('./routes/routes')
+
+const Sentry = require('@sentry/node');
+const Tracing = require("@sentry/tracing");
+
 const app = express()
 const port = 8080
+
+// Sentry
+Sentry.init({
+  dsn: "https://5662cf6bf96b4cba8a6468951331161e@o1059903.ingest.sentry.io/6048981",
+  integrations: [
+    // enable HTTP calls tracing
+    new Sentry.Integrations.Http({ tracing: true }),
+    // enable Express.js middleware tracing
+    new Tracing.Integrations.Express({ app }),
+  ],
+
+  // Set tracesSampleRate to 1.0 to capture 100%
+  // of transactions for performance monitoring.
+  // We recommend adjusting this value in production
+  tracesSampleRate: 1.0,
+});
+
+// RequestHandler creates a separate execution context using domains, so that every
+// transaction/span/breadcrumb is attached to its own Hub instance
+app.use(Sentry.Handlers.requestHandler());
+// TracingHandler creates a trace for every incoming request
+app.use(Sentry.Handlers.tracingHandler());
+
 
 // Middlewares
 app.use(express.json())
@@ -19,6 +46,26 @@ db.once("open", function () {
 })
 
 
+app.get('/error', (req, res) => {
+  throw new Error('Oups, there is an error on my express serv')
+})
+
+
+app.get('/Sentry', (req, res) => {
+  throw new Error('Sentry is working V2')
+})
+
+// The error handler must be before any other error middleware and after all controllers
+// Par défaut, errorHandlerne capture que les erreurs avec un code d'état 500supérieur ou égal à (voir doc pour modifier)
+app.use(Sentry.Handlers.errorHandler());
+
+// Optional fallthrough error handler
+app.use(function onError(err, req, res, next) {
+  // The error id is attached to `res.sentry` to be returned
+  // and optionally displayed to the user for support.
+  res.statusCode = 500;
+  res.end(res.sentry + "\n");
+});
 
 app.get('/', (req, res) => {
   res.send('Hello World!')
