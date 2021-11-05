@@ -7,6 +7,9 @@ const router = require('./routes/routes')
 const Sentry = require('@sentry/node');
 const Tracing = require("@sentry/tracing");
 
+const swaggerUi = require('swagger-ui-express')
+const swaggerDocument = require('./swagger.json');
+
 const port = 8080
 
 // Sentry
@@ -70,6 +73,11 @@ app.use(function onError(err, req, res, next) {
 app.get('/', (req, res) => {
   res.send('Hello World!')
 })
+
+app.use(
+  swaggerUi.serve, 
+  swaggerUi.setup(swaggerDocument)
+);
 
 app.listen(port, () => {
   console.log(`Run at http://localhost:${port}`)
