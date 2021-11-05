@@ -3,18 +3,7 @@ const express = require("express");
 const userModel = require("../db/users");
 const app = express();
 
-/*app.post("/api/inscription", async (request, response) => {
-    const user = new userModel(request.body);
-    try {
-      await user.save();
-      console.log("Post OK")
-      response.send(user);
-    } catch (error) {
-        console.log("Erreur 500")
-        response.status(500).send(error);
-    }
-});*/
-
+// routes pour inscription
 app.post("/api/inscription",async (request,response)=>{
     userModel.findOne({email: request.body.email}).then((user)=>{
         if(user){
@@ -32,6 +21,7 @@ app.post("/api/inscription",async (request,response)=>{
     })
 })
 
+// routes récupérer tous les utilisateurs
 app.get("/api/getAllUsers", async (request, response) => {
     const users = await userModel.find({});
     try {
@@ -41,7 +31,7 @@ app.get("/api/getAllUsers", async (request, response) => {
     }
   });
 
-
+// route pour la connexion
 app.get("/api/checkUser", async (request, response) => {
     userModel.findOne({email: request.query.email,password: request.query.password},function(err,user){
         if(!user){
@@ -53,5 +43,13 @@ app.get("/api/checkUser", async (request, response) => {
     })
 })
 
-
+// route update user
+app.put("/api/updateUser",async(request,response)=>{
+    // const filter = {_id : request.body.id}
+    // const update = {toto : 89}
+    let updates = request.body
+    userModel.findOneAndUpdate({_id: request.body.id},updates,{new: true})
+        .then(updateUser => response.json(updateUser))
+        .catch(err => response.status(400).json("Error : "+err))
+})
 module.exports = app;

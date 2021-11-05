@@ -18,6 +18,9 @@ const UserSchema = new mongoose.Schema({
       type:String,
       default: null,
   },
+  activities:{
+    type:Array,
+  }
 });
 
 const User = mongoose.model("users", UserSchema);
