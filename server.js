@@ -6,6 +6,9 @@ const router = require('./routes/routes')
 const Sentry = require('@sentry/node');
 const Tracing = require("@sentry/tracing");
 
+const swaggerUi = require('swagger-ui-express')
+const swaggerDocument = require('./swagger.json');
+
 const app = express()
 const port = 8080
 
@@ -46,12 +49,13 @@ db.once("open", function () {
   console.log("Connexion à Mongo OK");
 })
 
-app.get('/', (req, res) => {
+
+app.get('/hello', (req, res) => {
   res.send('Hello World!')
 })
 
 app.get('/error', (req, res) => {
-  throw new Error('Oups, there is an error on my express merge version')
+  throw new Error('Oups, test error')
 })
 
 app.get('/Sentry', (req, res) => {
@@ -69,6 +73,11 @@ app.use(function onError(err, req, res, next) {
   res.statusCode = 500;
   res.end(res.sentry + "\n");
 });
+
+app.use(
+  swaggerUi.serve, 
+  swaggerUi.setup(swaggerDocument)
+);
 
 app.listen(port, () => {
   console.log(`Run at http://localhost:${port}`)
