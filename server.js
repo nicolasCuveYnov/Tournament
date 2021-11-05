@@ -1,3 +1,4 @@
+/* eslint-disable */
 const express = require('express')
 const app = express()
 
@@ -50,9 +51,15 @@ db.once("open", function () {
 })
 
 
-app.get('/error', (req, res) => {
-  throw new Error('Oups, there is an error on my express serv')
+app.get('/hello', (req, res) => {
+  res.send('Hello World!')
 })
+
+
+app.get('/error', (req, res) => {
+  throw new Error('Oups, test error')
+})
+
 
 app.get('/Sentry', (req, res) => {
   throw new Error('Sentry is working V2')
@@ -69,10 +76,6 @@ app.use(function onError(err, req, res, next) {
   res.statusCode = 500;
   res.end(res.sentry + "\n");
 });
-
-app.get('/', (req, res) => {
-  res.send('Hello World!')
-})
 
 app.use(
   swaggerUi.serve, 
