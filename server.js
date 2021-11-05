@@ -1,5 +1,7 @@
 /* eslint-disable */
 const express = require('express')
+const app = express()
+
 const mongoose = require('mongoose')
 const router = require('./routes/routes')
 
@@ -9,7 +11,6 @@ const Tracing = require("@sentry/tracing");
 const swaggerUi = require('swagger-ui-express')
 const swaggerDocument = require('./swagger.json');
 
-const app = express()
 const port = 8080
 
 // Sentry
@@ -34,10 +35,10 @@ app.use(Sentry.Handlers.requestHandler());
 // TracingHandler creates a trace for every incoming request
 app.use(Sentry.Handlers.tracingHandler());
 
-
 // Middlewares
 app.use(express.json())
 app.use(router)
+
 // MongoDB
 mongoose.connect('mongodb+srv://toto:123456789toto@sportogether.jeriw.mongodb.net/sportogether?retryWrites=true&w=majority',{
   useNewUrlParser : true,
@@ -54,9 +55,11 @@ app.get('/hello', (req, res) => {
   res.send('Hello World!')
 })
 
+
 app.get('/error', (req, res) => {
   throw new Error('Oups, test error')
 })
+
 
 app.get('/Sentry', (req, res) => {
   throw new Error('Sentry is working V2')
