@@ -1,11 +1,12 @@
 const express = require('express')
+const app = express()
+
 const mongoose = require('mongoose')
 const router = require('./routes/routes')
 
 const Sentry = require('@sentry/node');
 const Tracing = require("@sentry/tracing");
 
-const app = express()
 const port = 8080
 
 // Sentry
@@ -30,10 +31,10 @@ app.use(Sentry.Handlers.requestHandler());
 // TracingHandler creates a trace for every incoming request
 app.use(Sentry.Handlers.tracingHandler());
 
-
 // Middlewares
 app.use(express.json())
 app.use(router)
+
 // MongoDB
 mongoose.connect('mongodb+srv://toto:123456789toto@sportogether.jeriw.mongodb.net/sportogether?retryWrites=true&w=majority',{
   useNewUrlParser : true,
@@ -49,7 +50,6 @@ db.once("open", function () {
 app.get('/error', (req, res) => {
   throw new Error('Oups, there is an error on my express serv')
 })
-
 
 app.get('/Sentry', (req, res) => {
   throw new Error('Sentry is working V2')
