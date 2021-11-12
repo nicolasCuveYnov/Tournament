@@ -20,7 +20,7 @@ const UserSchema = new mongoose.Schema({
   },
   proBoolean:{
     type: Boolean,
-    default: False,
+    default: false,
   },
   activities:{
     type:Array,
