@@ -40,6 +40,7 @@ app.use(Sentry.Handlers.tracingHandler());
 // Middlewares
 app.use(express.json())
 app.use(router)
+app.use(cors({origin: '*'}));
 
 // MongoDB
 mongoose.connect('mongodb+srv://toto:123456789toto@sportogether.jeriw.mongodb.net/sportogether?retryWrites=true&w=majority',{
@@ -83,8 +84,6 @@ app.use(
   swaggerUi.serve, 
   swaggerUi.setup(swaggerDocument)
 );
-
-app.use(cors({origin: '*'}));
 
 app.listen(port, () => {
   console.log(`Run at http://localhost:${port}`)
