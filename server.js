@@ -2,6 +2,8 @@
 const express = require('express')
 const app = express()
 
+const cors = require('cors')
+
 const mongoose = require('mongoose')
 const router = require('./routes/routes')
 
@@ -81,6 +83,8 @@ app.use(
   swaggerUi.serve, 
   swaggerUi.setup(swaggerDocument)
 );
+
+app.use(cors({origin: 'http://localhost:8080'}));
 
 app.listen(port, () => {
   console.log(`Run at http://localhost:${port}`)
