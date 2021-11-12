@@ -84,7 +84,7 @@ app.use(
   swaggerUi.setup(swaggerDocument)
 );
 
-app.use(cors({origin: 'http://localhost:8080'}));
+app.use(cors({origin: '*'}));
 
 app.listen(port, () => {
   console.log(`Run at http://localhost:${port}`)
