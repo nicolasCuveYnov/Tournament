@@ -13,7 +13,8 @@ app.post("/api/inscription",async (request,response)=>{
                 name: request.body.name,
                 email: request.body.email,
                 password: request.body.password,
-                phoneNumber: request.body.phoneNumber
+                phoneNumber: request.body.phoneNumber,
+                proBoolean: request.body.proBoolean
             })
             newUser.save()
             return response.status(200).json({msg: newUser})
