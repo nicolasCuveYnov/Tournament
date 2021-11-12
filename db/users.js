@@ -12,7 +12,6 @@ const UserSchema = new mongoose.Schema({
   email:{
       type: String,
       required: true,
-      
   },
   phoneNumber:{
       type:String,
@@ -24,7 +23,14 @@ const UserSchema = new mongoose.Schema({
   },
   activities:{
     type:Array,
-  }
+  },
+  biography:{
+    type: String,
+    default: null,
+  },
+  listEvents:{
+    type:Array,
+  },
 });
 
 const User = mongoose.model("users", UserSchema);
