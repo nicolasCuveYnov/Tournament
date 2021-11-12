@@ -32,14 +32,14 @@ app.get("/api/getAllUsers", async (request, response) => {
     }
   });
 
-// route pour la connexion
-app.get("/api/checkUser", async (request, response) => {
-    userModel.findOne({email: request.query.email,password: request.query.password},function(err,user){
-        if(!user){
-            return response.status(404).json({email : "mail inexistant",password: "mot de passe incorrect"})
-        }
-        else{
-            response.json({id: user.id})
+  app.post("/api/checkUser",async (request,response)=>{
+    userModel.findOne({email: request.body.email}).then((user)=>{
+        if(user){
+            if(user.password == request.body.password){
+                return response.status(400).json({email : "identifiants corrects :)"})
+            }else{
+                return response.status(200).json({email: "identifiants incorrects :("})
+            }
         }
     })
 })
