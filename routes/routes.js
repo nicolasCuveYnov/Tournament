@@ -1,3 +1,4 @@
+/* eslint-disable */
 const express = require("express");
 const userModel = require("../db/users");
 const app = express();
@@ -35,9 +36,9 @@ app.get("/api/getAllUsers", async (request, response) => {
     userModel.findOne({email: request.body.email}).then((user)=>{
         if(user){
             if(user.password == request.body.password){
-                return response.status(400).json({email : "identifiants corrects :)"})
+                return response.status(200).json({email : "identifiants corrects :)"})
             }else{
-                return response.status(200).json({email: "identifiants incorrects :("})
+                return response.status(400).json({email: "identifiants incorrects :("})
             }
         }
     })
