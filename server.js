@@ -89,3 +89,4 @@ app.listen(port, () => {
   console.log(`Run at http://localhost:${port}`)
 })
 
+module.exports = app;
