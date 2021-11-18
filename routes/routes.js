@@ -1,6 +1,7 @@
 /* eslint-disable */
 const express = require("express");
 const userModel = require("../db/users");
+const eventModel = require("../db/events")
 const app = express();
 
 // routes pour inscription
@@ -53,4 +54,15 @@ app.put("/api/updateUser",async(request,response)=>{
         .then(updateUser => response.json(updateUser))
         .catch(err => response.status(400).json("Error : "+err))
 })
+
+// routes récupérer tous les utilisateurs
+app.get("/api/getAllEvents", async (request, response) => {
+    const events = await eventModel.find({});
+    try {
+      response.send(events);
+    } catch (error) {
+      response.status(500).send(error);
+    }
+  });
+
 module.exports = app;
