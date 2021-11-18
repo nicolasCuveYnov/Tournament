@@ -33,14 +33,30 @@ app.get("/api/getAllUsers", async (request, response) => {
     }
   });
 
-  app.post("/api/checkUser",async (request,response)=>{
+// app.post("/api/checkUser",async (request,response)=>{
+//     userModel.findOne({email: request.body.email}).then((user,err)=>{
+//         if(user.email == request.body.email){
+//             if(user.password == request.body.password){
+//                 return response.status(200).json({email : "identifiants corrects :)"})
+//             }else{
+//                 return response.status(400).json({email: "identifiants incorrects :("})
+//             }
+//         }
+//     })
+// })
+
+app.post("/api/checkUser",async (request,response)=>{
     userModel.findOne({email: request.body.email}).then((user)=>{
-        if(user.email == request.body.email){
-            if(user.password == request.body.password){
-                return response.status(200).json({email : "identifiants corrects :)"})
-            }else{
-                return response.status(400).json({email: "identifiants incorrects :("})
+        try{
+            if(user.email == request.body.email){
+                if(user.password == request.body.password){
+                    return response.status(200).json({email : "adresse mail et mot de passe OK"})
+                }else{
+                    return response.status(400).json({msg : "mot de passe incorrect"})
+                }
             }
+        }catch(error){
+            return response.status(400).json({msg:"adresse mail incorrect"})
         }
     })
 })
