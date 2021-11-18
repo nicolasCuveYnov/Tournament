@@ -34,7 +34,7 @@ app.get("/api/getAllUsers", async (request, response) => {
 
   app.post("/api/checkUser",async (request,response)=>{
     userModel.findOne({email: request.body.email}).then((user)=>{
-        if(user){
+        if(user.email == request.body.email){
             if(user.password == request.body.password){
                 return response.status(200).json({email : "identifiants corrects :)"})
             }else{
