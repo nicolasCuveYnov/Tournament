@@ -1,5 +1,6 @@
+/* eslint-disable */
 const supertest = require("supertest");
-const assert = require('assert');
+// const assert = require('assert');
 const app = require("../server");
 
 describe("LAUNCH /", function() {
@@ -7,7 +8,7 @@ describe("LAUNCH /", function() {
       supertest(app)
         .get("/hello")
         .expect(200)
-        .end(function(err, res){
+        .end(function(err){
           if (err) done(err);
           done();
         });
