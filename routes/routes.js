@@ -108,5 +108,16 @@ app.put("/api/addEventToUser",async(request,response)=>{
 })
 
 // route supprimer event à un utilisateur
-
+app.put("/api/deleteEventFromUser",async(request,response)=>{
+    // const filter = {_id : request.body.id}
+    // const update = {toto : 89}
+    let updates = request.body
+    updates = {
+        "id":updates.id,
+        "$pull":{"listEvents":updates.listEvents}
+    }
+    userModel.findOneAndUpdate({_id: request.body.id},updates,{new: true,upsert: true})
+        .then(updateUser => response.json(updateUser))
+        .catch(err => response.status(400).json("Error : "+err))
+})
 module.exports = app;
