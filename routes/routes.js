@@ -1,7 +1,8 @@
 /* eslint-disable */
 const express = require("express");
 const userModel = require("../db/users");
-const eventModel = require("../db/events")
+const eventModel = require("../db/events");
+const { checkOrSetAlreadyCaught } = require("@sentry/utils");
 const app = express();
 
 // routes pour inscription
@@ -81,4 +82,14 @@ app.get("/api/getAllEvents", async (request, response) => {
     }
   });
 
+// route création d'un event
+app.post("/api/createEvent",async (request,response)=>{
+    const event = new eventModel(request.body)
+    try{
+        await event.save()
+        response.send(event)
+    }catch(error){
+        response.status(500).json({msg:error})
+    }
+})
 module.exports = app;
