@@ -7,6 +7,7 @@ const EventSchema = new mongoose.Schema({
   },
   detail:{
       type:String,
+      default:"Pas de description"
   },
   category:{
       type : String,
@@ -20,6 +21,18 @@ const EventSchema = new mongoose.Schema({
       type: Number,
       required: true,
   },
+  date:{
+    type:Date,
+    require:true,
+  },
+  startTime:{
+    type:String,
+    require: true
+  },
+  endTime:{
+    type: String,
+    require: true
+  }
 });
 
 const Event = mongoose.model("events", EventSchema);
