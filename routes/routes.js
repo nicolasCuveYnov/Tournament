@@ -51,7 +51,7 @@ app.post("/api/checkUser",async (request,response)=>{
         try{
             if(user.email == request.body.email){
                 if(user.password == request.body.password){
-                    return response.status(200).json({email : "adresse mail et mot de passe OK"})
+                    return response.status(200).json(user)
                 }else{
                     return response.status(400).json({msg : "mot de passe incorrect"})
                 }
