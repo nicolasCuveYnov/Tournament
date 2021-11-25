@@ -26,7 +26,7 @@ const UserSchema = new mongoose.Schema({
   },
   biography:{
     type: String,
-    default: null,
+    default: "Je n'ai pas encore d'inspiration pour ma bio",
   },
   listEvents:{
     type:Array,
