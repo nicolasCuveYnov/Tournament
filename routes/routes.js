@@ -4,6 +4,7 @@ const userModel = require("../db/users");
 const eventModel = require("../db/events");
 const categoryModel =require("../db/categories");
 const { checkOrSetAlreadyCaught } = require("@sentry/utils");
+const { events } = require("../db/users");
 const app = express();
 
 // routes pour inscription
@@ -128,10 +129,19 @@ app.put("/api/deleteEventFromUser",async(request,response)=>{
         "id":updates.id,
         "$pull":{"listEvents":updates.listEvents}
     }
-    userModel.findOneAndUpdate({_id: request.body.id},updates,{new: true,upsert: true})
-        .then(updateUser => response.json(updateUser))
-        .catch(err => response.status(400).json("Error : "+err))
-})
+    userModel.findOneAndUpdate({_id: request.body.id},updates,{new: true,upsert: true}).then((updateUser)=>{
+            let listOfId=updateUser.listEvents
+            try{
+                    eventModel.find().where("_id").in(listOfId).exec((error,events)=>{
+
+                        updateUser.listEvents = events
+                        return response.status(200).json(updateUser)
+                        // response.json(updateUser.listEvents)
+                    })
+                }catch(error){
+                    response.status(500).send(error)
+            }
+        })})
 // // route get events par user
 app.get("/api/eventsByUserId", async (request, response) => {
     const users = await userModel.findOne({_id: request.body.id})
