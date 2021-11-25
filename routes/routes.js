@@ -51,7 +51,18 @@ app.post("/api/checkUser",async (request,response)=>{
         try{
             if(user.email == request.body.email){
                 if(user.password == request.body.password){
-                    return response.status(200).json(user)
+                    let listOfId = user.listEvents
+                    // console.log(listOfId)
+                    // return response.status(200).json(user)
+                    try{
+                        eventModel.find().where("_id").in(listOfId).exec((error,events)=>{
+                            // console.log(events)
+                            user.listEvents = events
+                            return response.status(200).json(user)
+                        })
+                    }catch(error){
+                        response.status(500).send(error)
+                    }
                 }else{
                     return response.status(400).json({msg : "mot de passe incorrect"})
                 }
