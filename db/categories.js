@@ -1,8 +1,8 @@
 const mongoose = require("mongoose");
 
 const CategorySchema = new mongoose.Schema({
-    list:{
-        type: Array,
+    category:{
+        type: String,
         required:true
     }
 });
