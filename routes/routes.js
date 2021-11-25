@@ -120,4 +120,16 @@ app.put("/api/deleteEventFromUser",async(request,response)=>{
         .then(updateUser => response.json(updateUser))
         .catch(err => response.status(400).json("Error : "+err))
 })
+// // route get events par user
+app.get("/api/eventsByUserId", async (request, response) => {
+    const users = await userModel.findOne({_id: request.body.id})
+    const listOfId = users.listEvents
+    try {
+        const events = await eventModel.find().where("_id").in(listOfId).exec()
+        response.send(events);
+    } catch (error) {
+      response.status(500).send(error);
+    }
+  });
+  
 module.exports = app;
