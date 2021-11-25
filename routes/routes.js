@@ -2,6 +2,7 @@
 const express = require("express");
 const userModel = require("../db/users");
 const eventModel = require("../db/events");
+const categoryModel =require("../db/categories");
 const { checkOrSetAlreadyCaught } = require("@sentry/utils");
 const app = express();
 
@@ -142,5 +143,15 @@ app.get("/api/eventsByUserId", async (request, response) => {
       response.status(500).send(error);
     }
   });
-  
+
+// route get liste des sports
+app.get("/api/getSportsCategories", async (request, response) => {
+    const categories = await categoryModel.find({});
+    try {
+      response.send(categories);
+    } catch (error) {
+      response.status(500).send(error);
+    }
+  });
+
 module.exports = app;
