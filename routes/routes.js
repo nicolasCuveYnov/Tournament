@@ -144,7 +144,7 @@ app.put("/api/deleteEventFromUser",async(request,response)=>{
         })})
 // // route get events par user
 app.get("/api/eventsByUserId", async (request, response) => {
-    const users = await userModel.findOne({_id: request.body.id})
+    const users = await userModel.findOne({_id: request.query.id})
     const listOfId = users.listEvents
     try {
         const events = await eventModel.find().where("_id").in(listOfId).exec()
