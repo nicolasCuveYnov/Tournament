@@ -1,3 +1,4 @@
+import tournoiController from "./tournoiController";
 const express = require("express");
 const ParticipantService = require('./ParticipantService')
 const TournoiService = require('./TournoiService')
@@ -24,10 +25,7 @@ app.get("/api/getParticipants", async (request, response) => {
   });
 
 // Ajout d'un tournoi
-app.post("/api/addTournoi",async (request,response)=>{
-
-
-})
+app.post("/api/addTournoi",tournoiController.post)
 
 // Recuperer un tournoi
 app.get("/api/getTournoi", async (request, response) => {
