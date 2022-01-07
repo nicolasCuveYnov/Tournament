@@ -3,7 +3,7 @@
     "info": {
       "description": "",
       "version": "1.0.0",
-      "title": "Swagger Sportogether"
+      "title": "Swagger Tournois"
     },
     "host": "localhost:8080",
     "basePath": "/",

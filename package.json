@@ -1,22 +1,21 @@
 {
-  "name": "sportogether-api",
+  "name": "tournament-api",
   "version": "1.0.0",
-  "description": "The Sportogether api",
+  "description": "Tournament",
   "main": "server.js",
   "scripts": {
-    "lint": "eslint **/*.js",
     "test": "jest"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Michel-Maxime/Sportogether-api.git"
+    "url": "git+https://github.com/mohamed0315/Tournament.git"
   },
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/Michel-Maxime/Sportogether-api/issues"
+    "url": "https://github.com/mohamed0315/Tournament/issues"
   },
-  "homepage": "https://github.com/Michel-Maxime/Sportogether-api#readme",
+  "homepage": "https://github.com/mohamed0315/Tournament.git",
   "dependencies": {
     "@sentry/node": "^6.14.0",
     "@sentry/tracing": "^6.14.0",
@@ -33,7 +32,6 @@
     "swagger-ui-express": "^4.1.6"
   },
   "devDependencies": {
-    "eslint": "^8.1.0",
     "jest": "^27.3.1",
     "supertest": "^6.1.6"
   },
